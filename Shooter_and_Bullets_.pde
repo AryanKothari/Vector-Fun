@@ -17,6 +17,8 @@ void setup()
   background = loadImage("wild.jpg");
   background.resize(width, height);
   background(background);
+  
+  mousePos = new PVector(mouseX, mouseY);
 
   shooter = new Shooter();
   bullet = new Bullet();
@@ -42,10 +44,10 @@ void draw()
     bullet.shoot();
   }
 
-  //if (bullet.pos.x > 400)//bullet.pos.x == mousePos.x && bullet.pos.y == mousePos.y)
-  //{
-  //  bullet.reset();
-  //}
+ if (bullet.pos.x > 600 || bullet.pos.y < 100)//bullet.pos.x == mousePos.x && bullet.pos.y == mousePos.y)
+  {
+    bullet.reset();
+  }
 }
 
 void mousePressed()

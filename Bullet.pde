@@ -36,7 +36,7 @@ class Bullet
   {
     if (mousemoving)
     {
-      mousePos = new PVector(mouseX, mouseY);
+      mousePos.set(mouseX, mouseY);
     }
     if (fire)
     {
