@@ -43,8 +43,10 @@ void draw()
   {
     bullet.shoot();
   }
+  
+  float distance = bullet.pos.dist(mousePos);
 
- if (bullet.pos.x > 600 || bullet.pos.y < 100)//bullet.pos.x == mousePos.x && bullet.pos.y == mousePos.y)
+ if (distance < 50)//bullet.pos.x == mousePos.x && bullet.pos.y == mousePos.y)
   {
     bullet.reset();
   }
