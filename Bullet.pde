@@ -3,19 +3,22 @@ class Bullet
   private PVector pos;
   private PImage bullet;
   private PVector distance;
+  private boolean getangle;
 
   Bullet()
   {
     pos = new PVector (90, 680);
     bullet = loadImage("bullet.png");
-    bullet.resize(30, 30);
+    getangle = true;
   }
 
 
   public void Draw()
   {
-    imageMode(CENTER);
-    image(bullet, pos.x, pos.y);
+    if (fire)
+    {
+      image(bullet, pos.x, pos.y, 30, 30);
+    }
   }
 
   public void move()
@@ -34,15 +37,21 @@ class Bullet
 
   public void shoot()
   {
+    pew.play();
+
     if (mousemoving)
     {
       mousePos.set(mouseX, mouseY);
     }
     if (fire)
     {
+      if (getangle)
+      {
+        distance = PVector.sub(mousePos, pos);
+        getangle = false;
+      }
       mousemoving = false;
       shootercanmove = false;
-      distance = PVector.sub(mousePos, pos);
       distance.normalize();
       distance.mult(15);
       pos.add(distance);
@@ -51,10 +60,11 @@ class Bullet
 
   public void reset()
   {
-      pos.x = shooter.pos.x + 50;
-      pos.y = shooter.pos.y - 80;
-      shootercanmove = true;
-      fire = false;
-      mousemoving = true;
-    }
+    pos.x = shooter.pos.x + 50;
+    pos.y = shooter.pos.y - 80;
+    shootercanmove = true;
+    fire = false;
+    mousemoving = true;
+    getangle = true;
   }
+}

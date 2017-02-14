@@ -54,12 +54,9 @@ void draw()
   if (fire)
   {
     bullet.shoot();
-    pew.play();
   }
 
-  float distance = bullet.pos.dist(mousePos);
-
-  if (distance < 50)//bullet.pos.x == mousePos.x && bullet.pos.y == mousePos.y)
+  if (bullet.pos.x > width || bullet.pos.x < 0 || bullet.pos.y > height || bullet.pos.y < 0)
   {
     bullet.reset();
     pew.rewind();
