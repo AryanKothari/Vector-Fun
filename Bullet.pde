@@ -50,8 +50,8 @@ class Bullet
         distance = PVector.sub(mousePos, pos);
         getangle = false;
       }
-      mousemoving = false;
-      shootercanmove = false;
+     // mousemoving = false;
+      //shootercanmove = false;
       distance.normalize();
       distance.mult(15);
       pos.add(distance);
