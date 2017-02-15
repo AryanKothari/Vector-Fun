@@ -13,16 +13,17 @@ Minim minim;
 AudioPlayer pew;
 
 Shooter shooter;
-Bullet bullet;
+ArrayList<Bullet> bullet = new ArrayList<Bullet>();
 boolean mousemoving = true;
-boolean shootercanmove = true;
 PImage background;
 PVector mousePos;
-boolean fire = false;
+boolean fired = false;
+boolean getangle = true;
+int millis = millis();
 
 void setup()
 {
-  fullScreen();
+  fullScreen(P2D);
   background = loadImage("wild.jpg");
   background.resize(width, height);
   background(background);
@@ -33,7 +34,8 @@ void setup()
   mousePos = new PVector(mouseX, mouseY);
 
   shooter = new Shooter();
-  bullet = new Bullet();
+
+  bullet.add(new Bullet());
 }
 
 
@@ -43,27 +45,27 @@ void draw()
   background(background);
 
   shooter.Draw();
-  bullet.Draw();
+  shooter.move();
 
-  if (shootercanmove)
+  for (int i = 0; i < bullet.size(); i++)
   {
-    shooter.move();
-    bullet.move();
+    if (fired)
+    {
+      bullet.get(i).Draw();
+      bullet.get(i).shoot();
+      pew.play();
+    }
   }
 
-  if (fire)
+  if (mousePressed)
   {
-    bullet.shoot();
+    fired = true;
+    //if(millis > 1000)
+    {
+      bullet.add(new Bullet());
+      //millis = millis();
+    }
+    mousemoving = true;
+    getangle = true;
   }
-
-  if (bullet.pos.x > width || bullet.pos.x < 0 || bullet.pos.y > height || bullet.pos.y < 0)
-  {
-    bullet.reset();
-    pew.rewind();
-  }
-}
-
-void mousePressed()
-{
-  fire = true;
 }
