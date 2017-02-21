@@ -21,7 +21,7 @@ PVector mousePos;
 boolean fired = false;
 boolean getangle = true;
 int millis = millis();
-int screen = 2;
+int screen = 1;
 
 void setup()
 {
