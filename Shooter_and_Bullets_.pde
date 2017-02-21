@@ -14,12 +14,14 @@ AudioPlayer pew;
 
 Shooter shooter;
 ArrayList<Bullet> bullet = new ArrayList<Bullet>();
+ArrayList<Bird> bird = new ArrayList<Bird>();
 boolean mousemoving = true;
 PImage background;
 PVector mousePos;
 boolean fired = false;
 boolean getangle = true;
 int millis = millis();
+int screen = 2;
 
 void setup()
 {
@@ -33,6 +35,11 @@ void setup()
 
   mousePos = new PVector(mouseX, mouseY);
 
+  for (int i =0; i < 400; i++)
+  {
+    bird.add(new Bird());
+  }
+
   shooter = new Shooter();
 
   bullet.add(new Bullet());
@@ -41,31 +48,74 @@ void setup()
 
 void draw()
 {
-
-  background(background);
-
-  shooter.Draw();
-  shooter.move();
-
-  for (int i = 0; i < bullet.size(); i++)
+  if (screen == 1)
   {
-    if (fired)
+    background(background);
+
+    shooter.Draw();
+    shooter.move();
+
+    for (int i = 0; i < bird.size(); i++)
     {
-      bullet.get(i).Draw();
-      bullet.get(i).shoot();
-      pew.play();
+      bird.get(i).Draw();
     }
+
+    for (int i = 0; i < bullet.size(); i++)
+    {
+      if (fired)
+      {
+        bullet.get(i).Draw();
+        bullet.get(i).shoot();
+        pew.play();
+      }
+    }
+    for (int i = 0; i < bullet.size(); i++)
+    {
+      for (int j = 0; j < bird.size(); j++)
+      {
+        if (bullet.get(i).pos.x < bird.get(j).pos.x + 50&&
+          bullet.get(i).pos.x + 30 > bird.get(j).pos.x &&
+          bullet.get(i).pos.y < bird.get(j).pos.y + 30 &&
+          30 + bullet.get(i).pos.y > bird.get(j).pos.y)
+        {
+          bird.get(j).candrawbird = false;
+          bird.get(j).pos.x = -5000;
+          bullet.get(i).candrawb = false;
+          bullet.get(i).pos.x = -5000;
+        }
+      }
+    }
+
+    if (mousePressed)
+    {
+      fired = true;
+      bullet.add(new Bullet());
+      mousemoving = true;
+      getangle = true;
+    }
+    shooterishit();
   }
 
-  if (mousePressed)
+  if (screen == 2)
   {
-    fired = true;
-    //if(millis > 1000)
+    background(0);
+    fill(255, 255, 255);
+    textSize(100);
+    text("Game Over", width/4, height/2);
+  }
+}
+
+
+void shooterishit()
+{
+  for (int i = 0; i<bird.size(); i++)
+  {
+    if (shooter.pos.x < bird.get(i).pos.x + 50&&
+      shooter.pos.x + 150 > bird.get(i).pos.x &&
+      shooter.pos.y < bird.get(i).pos.y + 30 &&
+      150 + shooter.pos.y > bird.get(i).pos.y) 
     {
-      bullet.add(new Bullet());
-      //millis = millis();
+      screen = 2;
     }
-    mousemoving = true;
-    getangle = true;
   }
 }
