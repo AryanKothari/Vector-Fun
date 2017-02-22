@@ -1,7 +1,6 @@
 class Bullet
 {
   private PVector pos;
-  private PImage bullet;
   private PVector distance;
   private boolean getangle;
   private boolean candrawb;
@@ -9,7 +8,6 @@ class Bullet
   Bullet()
   {
     pos = new PVector (shooter.pos.x + 50, shooter.pos.y - 80);
-    bullet = loadImage("bullet.png");
     getangle = true;
     candrawb = true;
   }
@@ -19,7 +17,7 @@ class Bullet
   {
     if(candrawb)
     {
-    image(bullet, pos.x, pos.y, 30, 30);
+    image(bulletpic, pos.x, pos.y, 30, 30);
     }
   }
 

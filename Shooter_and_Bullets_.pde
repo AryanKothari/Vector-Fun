@@ -17,9 +17,13 @@ ArrayList<Bullet> bullet = new ArrayList<Bullet>();
 ArrayList<Bird> bird = new ArrayList<Bird>();
 boolean mousemoving = true;
 PImage background;
+PImage birdpic;
+PImage bulletpic;
+PImage shooterpic;
 PVector mousePos;
 boolean fired = false;
 boolean getangle = true;
+boolean canshoot = true;
 int millis = millis();
 int screen = 1;
 
@@ -29,6 +33,11 @@ void setup()
   background = loadImage("wild.jpg");
   background.resize(width, height);
   background(background);
+
+  birdpic = loadImage("bird.png");
+  bulletpic = loadImage("bullet.png");
+  shooterpic = loadImage("shooter.png");
+  shooterpic.resize(150, 150);
 
   minim = new Minim(this); //Music 
   pew = minim.loadFile("pew.mp3");
@@ -41,7 +50,6 @@ void setup()
   }
 
   shooter = new Shooter();
-
   bullet.add(new Bullet());
 }
 
@@ -88,10 +96,14 @@ void draw()
 
     if (mousePressed)
     {
-      fired = true;
-      bullet.add(new Bullet());
-      mousemoving = true;
-      getangle = true;
+      if (canshoot)
+      {
+        fired = true;
+        bullet.add(new Bullet());
+        mousemoving = true;
+        getangle = true;
+        canshoot = false;
+      }
     }
     shooterishit();
   }
@@ -103,6 +115,11 @@ void draw()
     textSize(100);
     text("Game Over", width/4, height/2);
   }
+}
+
+void mouseReleased()
+{
+  canshoot = true;
 }
 
 
