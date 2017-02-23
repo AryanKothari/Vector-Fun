@@ -26,6 +26,7 @@ boolean getangle = true;
 boolean canshoot = true;
 int millis = millis();
 int screen = 1;
+int score = 0;
 
 void setup()
 {
@@ -60,6 +61,11 @@ void draw()
   {
     background(background);
 
+
+    fill(0, 0, 0);
+    textSize(40);
+    text("Score:" + score, 50, 50);
+    
     shooter.Draw();
     shooter.move();
 
@@ -89,7 +95,8 @@ void draw()
           bird.get(j).candrawbird = false;
           bird.get(j).pos.x = -5000;
           bullet.get(i).candrawb = false;
-          bullet.get(i).pos.x = -5000;
+          bullet.get(i).pos.x = 5000;
+          score = score + 1;
         }
       }
     }
